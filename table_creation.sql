@@ -41,7 +41,7 @@ CREATE TABLE GroupPost (
     groupPostID int,
 	groupID int,
 	userID int,
-	timestamp datetime,
+	postTime datetime,
 	PRIMARY KEY (groupPostID),
 	FOREIGN KEY (groupID) REFERENCES GroupInfo(groupID),
 	FOREIGN KEY (userID) REFERENCES UserLogin(userID)
