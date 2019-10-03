@@ -1,4 +1,4 @@
-CREATE TABLE User (
+CREATE TABLE UserLogin (
 	userID int NOT NULL,
 	userName varchar(255),
 	passHash varchar(255),
@@ -9,7 +9,7 @@ CREATE TABLE UserInterests (
 	userID int,
 	interestTag varchar(255),
 	PRIMARY KEY (userID, interestTag),
-	FOREIGN KEY (userID) REFERENCES User(userID)
+	FOREIGN KEY (userID) REFERENCES UserLogin(userID)
 );
 
 CREATE TABLE UserInfo (
@@ -18,7 +18,7 @@ CREATE TABLE UserInfo (
 	lName varchar(255),
 	userID int,
 	PRIMARY KEY (email, userID),
-	FOREIGN KEY (userID) REFERENCES User(userID)
+	FOREIGN KEY (userID) REFERENCES UserLogin(userID)
 );
 
 CREATE TABLE GroupInfo (
@@ -44,7 +44,7 @@ CREATE TABLE GroupPost (
 	timestamp datetime,
 	PRIMARY KEY (groupPostID),
 	FOREIGN KEY (groupID) REFERENCES GroupInfo(groupID),
-	FOREIGN KEY (userID) REFERENCES User(userID)
+	FOREIGN KEY (userID) REFERENCES UserLogin(userID)
 );
 
 CREATE TABLE GroupEvent (
@@ -61,7 +61,7 @@ CREATE TABLE RSVPUser (
 	userID int,
 	groupEventID int,
     PRIMARY KEY (userID, groupEventID),
-	FOREIGN KEY (userID) REFERENCES User(userID),
+	FOREIGN KEY (userID) REFERENCES UserLogin(userID),
 	FOREIGN KEY (groupEventID) REFERENCES GroupEvent(groupEventID)
 );
 
@@ -69,7 +69,7 @@ CREATE TABLE GroupUsers (
 	userID int,
 	groupID int,
 	PRIMARY KEY (userID, groupID),
-	FOREIGN KEY (userID) REFERENCES User(userID),
+	FOREIGN KEY (userID) REFERENCES UserLogin(userID),
 	FOREIGN KEY (groupID) REFERENCES GroupInfo(groupID)
 );
 
@@ -78,5 +78,5 @@ CREATE TABLE GroupPostLikes (
 	userID int,
 	PRIMARY KEY (groupPostID, userID),
 	FOREIGN KEY (groupPostID) REFERENCES GroupPost(groupPostID),
-	FOREIGN KEY (userID) REFERENCES User(userID)
+	FOREIGN KEY (userID) REFERENCES UserLogin(userID)
 );
