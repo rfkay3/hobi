@@ -21,12 +21,27 @@ CREATE TABLE UserInfo (
 	FOREIGN KEY (userID) REFERENCES UserLogin(userID)
 );
 
+CREATE TABLE UserImage (
+	userImage varbinary(max),
+	userID int,
+	PRIMARY KEY (userID),
+	FOREIGN KEY (userID) REFERENCES UserLogin(userID)
+);
+
 CREATE TABLE GroupInfo (
 	groupID int NOT NULL,
 	groupName varchar(255),
 	groupDescription varchar(255),
-	isPrivate boolean,
+	groupLocation varchar(255), 
+	isPrivate bit,
 	PRIMARY KEY (groupID)
+);
+
+CREATE TABLE GroupImage (
+	groupImage varbinary(max),
+	groupID int,
+	PRIMARY KEY (groupID),
+	FOREIGN KEY (groupID) REFERENCES GroupInfo(groupID)
 );
 
 CREATE TABLE GroupInterests (
@@ -52,7 +67,7 @@ CREATE TABLE GroupEvent (
 	groupID int,
 	creationTimestamp datetime,
 	scheduledTimestamp datetime,
-	description varchar(8000),
+	description varchar(max),
 	PRIMARY KEY (groupEventID, groupID),
 	FOREIGN KEY (groupID) REFERENCES GroupInfo(groupID)
 );
@@ -60,9 +75,10 @@ CREATE TABLE GroupEvent (
 CREATE TABLE RSVPUser (
 	userID int,
 	groupEventID int,
-    PRIMARY KEY (userID, groupEventID),
+    groupID int,
+    PRIMARY KEY (userID, groupEventID, groupID),
 	FOREIGN KEY (userID) REFERENCES UserLogin(userID),
-	FOREIGN KEY (groupEventID) REFERENCES GroupEvent(groupEventID)
+	FOREIGN KEY (groupEventID, groupID) REFERENCES GroupEvent(groupEventID, groupID)
 );
 
 CREATE TABLE GroupUsers (
