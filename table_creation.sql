@@ -1,3 +1,23 @@
+/* Prompt... select sql server to connect to - use local for testing*/
+use master
+
+/* Create hobiDB if none exists*/
+If not exists(
+				select name from master.dbo.sysdatabases
+				where name = 'HobiDB'
+			 )
+Begin
+create database [HobiDB]
+End
+
+use HobiDB
+ 
+
+
+
+
+
+
 CREATE TABLE UserLogin (
 	userID int NOT NULL,
 	userName varchar(255),
