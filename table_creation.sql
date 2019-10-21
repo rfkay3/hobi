@@ -1,23 +1,24 @@
+/* Hobi Schema Generation Script
+	Generates all tables
+*/
+
+
 /* Prompt... select sql server to connect to - use local for testing*/
 use master
 
 /* Create hobiDB if none exists*/
+create database [HobiDB]
 
-Begin try
-	create database [HobiDB]
-	use HobiDB
-End try
-begin catch
-	use HobiDB
-end catch
+use HobiDB
 
  
+
 
 
 CREATE TABLE UserLogin (
 userID int PRIMARY KEY IDENTITY,
 userName varchar(255),
-passHash varchar(255),
+passHash varbinary(max)
 );
 
 CREATE TABLE UserInterests (
@@ -43,13 +44,30 @@ PRIMARY KEY (userID),
 FOREIGN KEY (userID) REFERENCES UserLogin(userID)
 );
 
+
+CREATE TABLE Locations (
+	locationID int PRIMARY KEY IDENTITY,
+	country varchar(255),
+	state varchar(255),
+	city varchar(255),
+	latitude float,
+	longitude float
+)
+
 CREATE TABLE GroupInfo (
 groupID int NOT NULL Identity,
 groupName varchar(255),
 groupDescription varchar(255),
-groupLocation varchar(255), 
+locationID int foreign key references Locations(locationID),
+adminUserID int foreign key references UserLogin(userID),
 isPrivate bit,
-PRIMARY KEY (groupID)
+PRIMARY KEY (groupID),
+);
+
+CREATE TABLE GroupModerators(
+	gmID int primary key Identity,
+	userID int foreign key references UserLogin(userID),
+	groupID int foreign key references GroupInfo(groupID)
 );
 
 CREATE TABLE GroupImage (
@@ -79,6 +97,8 @@ FOREIGN KEY (userID) REFERENCES UserLogin(userID)
 );
 
 
+
+
 CREATE TABLE GroupEvent (
 groupEventID int NOT NULL IDENTITY,
 groupID int,
@@ -86,10 +106,15 @@ userID int,
 creationTimestamp datetime,
 scheduledTimestamp datetime,
 description varchar(max),
+locationID int
 PRIMARY KEY (groupEventID, groupID),
 FOREIGN KEY (groupID) REFERENCES GroupInfo(groupID),
+FOREIGN KEY (locationID) REFERENCES Locations(locationID),
 foreign key (userID) REFERENCES UserLogin(userID)
 );
+
+
+
 
 
 CREATE TABLE RSVPUser (
@@ -110,7 +135,7 @@ FOREIGN KEY (groupID) REFERENCES GroupInfo(groupID)
 );
 
 CREATE TABLE GroupPostLikes (
-groupPostID int ,
+groupPostID int,
 userID int,
 PRIMARY KEY (groupPostID, userID),
 FOREIGN KEY (groupPostID) REFERENCES GroupPost(groupPostID),
