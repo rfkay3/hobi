@@ -90,7 +90,7 @@ go
 					HASHBYTES('SHA2_512', @passHash) = UL.passHash
 				)))
 		begin
-			select 'success'
+			select 'success' as [Success], userID as [userID] from UserLogin where userName = @userName
 		end
 		else
 		begin
@@ -98,30 +98,44 @@ go
 		end
 	end
 
-
-
-
+	drop procedure spLoginUser
 	
 /*  edit username 
     edit username stored in userlogin given userID, current username, and  username to switch to	
+	Takes a username and password and changes username if password is correct
 */
 go
 	create procedure spEditUserName
-	@userID int,
+	@username varchar(255),
+	@password varchar(255),
 	@newUserName varchar(255)
 	as
 	begin
-		if(exists (select top(1) userID from UserLogin where userID = @userID))
-		begin
-			update UserLogin
-			set userName = @newUserName
-			where userID = @userID
-			select 'success'
-		end
-		else
-		begin
-			select 'failed: incorrect userID or username'
-		end
+		if(exists (select top(1) userID from UserLogin as UL
+			where
+				(
+					@userName = UL.userName
+
+					AND
+					HASHBYTES('SHA2_512', @password) = UL.passHash
+				)))
+			begin
+				if(not exists (select userName from UserLogin where userName = @newUserName))
+				begin
+				update UserLogin
+				set userName = @newUserName
+				where userName = @username
+				select 'success'
+				end
+				else
+				begin
+					select 'failed: that user name already exists'
+				end
+			end
+			else
+			begin
+				select 'failed: incorrect password'
+			end
 	end
 
 
@@ -174,32 +188,6 @@ go
 		select 'failed: no matching interest tag found'
 
 	end
-
-
-
-
-/*  edit username 
-	edit username in userLogin table
-*/
-go
-	create procedure spEditUserName
-	@userID int,
-	@newUserName varchar(255)
-	as
-	begin
-		if(exists (select userID from UserLogin where userID = @userID))
-		begin
-			update UserLogin
-			set userName = @newUserName
-			where userID = @userID
-			select 'success'
-		end
-		else
-		begin
-			select 'failed: userID not found'
-		end
-	end
-
 
 
 /*  edit users image 
@@ -508,3 +496,104 @@ go
 		end
 	end
 
+
+
+/* Admin only - edit group name*/
+go
+	create procedure spEditGroupName
+	@groupID int,
+	@userID int,
+	@newGroupName varchar(255)
+	as
+	begin
+		if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID))
+		begin
+			update GroupInfo
+			set groupName = @newGroupName
+			where groupID = @groupID
+			select 'success'
+		end
+		else
+		begin
+			select 'failed'
+		end
+
+	end
+
+
+/* Admin only - edit group privacy*/
+go
+	create procedure spEditGroupPrivacy
+	@groupID int,
+	@userID int,
+	@privacy bit
+	as
+	begin
+		if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID))
+		begin
+			update GroupInfo
+			set isPrivate = @privacy
+			where groupID = @groupID
+			select 'success'
+		end
+		else
+		begin
+			select 'failed'
+		end
+	end
+
+
+/* Admin only - add group moderator*/
+go
+create procedure spAddGroupModerator
+@userID int,
+@newModID int,
+@groupID int
+as
+begin
+	if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID))
+	begin
+	if(not exists(select top(1) userID from GroupModerators where userID = @newModID and groupID = @groupID))
+		begin
+		insert into GroupModerators (userID, groupID)
+		values(@newModID, @groupID)
+		select 'success'
+		end
+		else
+		begin
+			select 'failed: user is already a mod'
+		end
+	end
+	else
+	begin
+		select 'failed'
+	end
+end
+
+
+
+/* Admin only - remove group moderator*/
+go
+create procedure spRemoveGroupModerator
+@userID int,
+@modID int,
+@groupID int
+as
+begin
+	if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID))
+	begin
+	if(exists(select top(1) userID from GroupModerators where userID = @modID and groupID = @groupID))
+		begin
+		delete from GroupModerators where groupID = @groupID and userID = @modID
+		select 'success'
+		end
+		else
+		begin
+			select 'failed: user is not a mod'
+		end
+	end
+	else
+	begin
+		select 'failed'
+	end
+end
