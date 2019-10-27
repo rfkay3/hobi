@@ -142,3 +142,15 @@ FOREIGN KEY (groupPostID) REFERENCES GroupPost(groupPostID),
 FOREIGN KEY (userID) REFERENCES UserLogin(userID)
 );
 
+
+CREATE TABLE DirectMessages(
+senderID int foreign key references UserLogin(userID),
+receiverID int foreign key references UserLogin(userID),
+postTime datetime,
+postContent varchar(255)
+)
+
+CREATE TABLE JoinRequests(
+userID int foreign key references UserLogin(userID),
+groupID int foreign key references GroupInfo(groupID)
+)
