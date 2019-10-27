@@ -295,7 +295,6 @@ go
 	@isPrivate bit
 	as
 	begin
-		
 		insert into Locations (country, state, city, latitude, longitude)
 		values (@groupCountry, @groupState, @groupCity, @latitude, @longitude)
 
@@ -506,7 +505,7 @@ go
 	@newGroupName varchar(255)
 	as
 	begin
-		if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID))
+		if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID and @groupID = groupID))
 		begin
 			update GroupInfo
 			set groupName = @newGroupName
@@ -529,7 +528,7 @@ go
 	@privacy bit
 	as
 	begin
-		if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID))
+		if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID and @groupID = groupID))
 		begin
 			update GroupInfo
 			set isPrivate = @privacy
@@ -551,7 +550,7 @@ create procedure spAddGroupModerator
 @groupID int
 as
 begin
-	if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID))
+	if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID and @groupID = groupID))
 	begin
 	if(not exists(select top(1) userID from GroupModerators where userID = @newModID and groupID = @groupID))
 		begin
@@ -580,7 +579,7 @@ create procedure spRemoveGroupModerator
 @groupID int
 as
 begin
-	if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID))
+	if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID and @groupID = groupID))
 	begin
 	if(exists(select top(1) userID from GroupModerators where userID = @modID and groupID = @groupID))
 		begin
@@ -597,3 +596,126 @@ begin
 		select 'failed'
 	end
 end
+
+
+
+/* Admin Only - edit group icon */
+go
+create procedure spEditGroupIcon
+@userID int,
+@groupID int,
+@groupImage varbinary(max)
+as
+begin
+	if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID and @groupID = groupID))
+	begin
+		if(exists (select top(1) groupID from GroupImage where groupID = @groupID))
+		begin
+			update GroupImage
+			set groupImage = @groupImage
+			where groupID = @groupID
+			select 'success'
+		end
+		else
+		begin
+			insert into GroupImage(groupImage, groupID)
+			values(@groupImage, @groupID)
+			select 'sucess'
+		end
+	end
+	else
+	begin
+		select 'failed'
+	end
+end
+
+
+
+/*
+* Admin only - edit group location
+*/
+go
+create procedure spEditGroupLocation
+@userID int,
+@groupID int,
+@country varchar(255),
+@state varchar(255),
+@city varchar(255),
+@latitude float,
+@longitude float
+as
+begin
+	if(exists(select top(1) adminUserID from GroupInfo where @userID = adminUserID and @groupID = groupID))
+	begin
+		update Locations
+		set country = @country,
+		state = @state,
+		city = @city,
+		latitude = @latitude,
+		longitude = @longitude
+		where locationID = (select top(1) locationID from GroupInfo where groupID = @groupID)
+		select 'success'
+	end
+	else
+	begin
+		select 'failed'
+	end
+end
+
+
+/* Admin only - edit group description */
+go
+create procedure spEditGroupDescription
+@userID int,
+@groupID int,
+@description varchar(255)
+as
+begin
+	if( (select top(1) adminUserID from GroupInfo where groupID = @groupID) = @userID)
+	begin
+		if(exists (select top(1) groupID from GroupInfo where groupID = @groupID ))
+		begin
+			update GroupInfo
+			set groupDescription = @description
+			where groupID = @groupID
+			select 'success'
+		end
+		else
+		begin
+			select 'failed: group not found'
+		end
+	end
+	else
+	begin
+		select 'failed: user is not admin'
+	end
+end
+
+
+
+/* can this just be a web method???*/
+
+/* Get distance between two locations - used in find groups*/
+go
+create procedure spGetDistance
+@longitudeA float,
+@longitudeA float,
+@longitudeB float,
+@longitudeB float,
+@returnKilometers bit
+as
+begin
+	
+	declare @R float
+	set @R = 6378.1
+
+	declare @dLat float
+	set @dLat = 
+
+
+end
+
+
+
+/* convert degrees to radians*/
+
