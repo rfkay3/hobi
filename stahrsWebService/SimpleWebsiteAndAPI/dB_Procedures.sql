@@ -139,7 +139,28 @@ go
 	end
 
 
-
+/* edit user password */
+go
+create procedure spEditUserPassword
+@userID int,
+@password varchar(255),
+@newPassword varchar(255)
+as
+begin
+	if( exists (select top(1) userID from UserLogin where userID = @userID
+		and
+		passHash = HASHBYTES('SHA2_512', @password)))
+	begin
+		update UserLogin
+		set passHash = HASHBYTES('SHA2_512', @password)
+		where userID = @userID
+		select 'success'
+	end
+	else
+	begin
+		select 'failed: Incorrect Password'
+	end
+end
 
 
 
@@ -693,29 +714,391 @@ end
 
 
 
-/* can this just be a web method???*/
-
-/* Get distance between two locations - used in find groups*/
+/* send direct message - user to user*/
 go
-create procedure spGetDistance
-@longitudeA float,
-@longitudeA float,
-@longitudeB float,
-@longitudeB float,
-@returnKilometers bit
+create procedure spSendDM
+@senderID int,
+@receiverID int,
+@content varchar(255)
+as
+begin
+	insert into DirectMessages(senderID, receiverID, postTime, postContent)
+	values(@senderID, @receiverID, CURRENT_TIMESTAMP, @content)
+	select 'success'
+end
+
+
+
+/* get direct messages list - returns list of users a given user has sent dms to  */
+go
+create procedure spGetDMsList
+@userID int
+as
+begin
+	select senderID from DirectMessages where receiverID = @userID
+	union
+	select receiverID from DirectMessages where senderID = @userID
+end
+
+
+
+/* get direct messages - single convo */
+go
+create procedure spGetDMsConvo
+@userID int,
+@otherUserID int
+as
+begin
+	select * from DirectMessages where (senderID = @userID or receiverID = @userID) and (senderID = @otherUserID or receiverID = @otherUserID)
+end
+
+
+
+/* get direct message by id */
+go
+create procedure spGetDirectMessageByID
+@directMessageID int
+as
+begin
+	select senderID, receiverID, postTime, postContent from DirectMessages where directMessageID = @directMessageID
+end
+
+
+
+/* get group message by id*/
+go
+create procedure spGetGroupPostByID
+@groupPostID int
 as
 begin
 	
-	declare @R float
-	set @R = 6378.1
+	select userID, postTime, postContent from GroupPost where groupPostID = @groupPostID
 
-	declare @dLat float
-	set @dLat = 
+end
+
+
+
+/* get user by id*/
+go
+create procedure spGetUserByID
+@userID int
+as
+begin
+	select userName from UserLogin where userID = @userID
+end
+
+
+/* get location info by id*/
+go
+create procedure spGetLocationByID
+@locationID int
+as
+begin
+	select country, state, city, latitude, longitude from Locations where locationID = @locationID
+end
+
+
+
+/* get events a user has RSVPed to */
+go
+create procedure spGetUserRSVPEvents
+@userID int
+as
+begin
+
+	select RSVP.groupEventID from RSVPUser as RSVP
+	left join GroupEvent as GE on RSVP.groupEventID = GE.groupEventID
+	where RSVP.userID = @userID
+	order by GE.creationTimestamp
+
+end
+
+
+
+/* search group messages
+
+for a given group, find messages and events containg a keyword or phrase
+*/
+go
+create procedure spSearchGroupMessages
+@groupID int,
+@phrase varchar(255)
+as
+begin
+
+
+	/*get group posts IDs with matching post content*/
+	select 'postID', groupPostID from GroupPost
+	where groupID = @groupID
+	and
+	postContent like '%' + @phrase +  '%'
+
+	union
+
+	/* get group event ids with matching description*/
+	select 'eventID', groupEventID from GroupEvent
+	where groupID = @groupID
+	and
+	description like '%' + @phrase +  '%'
 
 
 end
 
 
 
-/* convert degrees to radians*/
+/*search direct messages
+for a given two users,
+get messages containing a keyword or phrase
+*/
+go
+create procedure spSearchDirectMessages
+@userID1 int,
+@userID2 int,
+@phrase varchar(255)
+as
+begin
+
+	select directMessageID from DirectMessages
+	where ((senderID = @userID1 or senderID = @userID2) and (receiverID = @userID1 or receiverID = @userID2))
+	and
+	postContent like '%' + @phrase +  '%'
+
+end
+
+
+
+
+/* admin or mod only - add group member (Private group)*/
+go
+create procedure spAcceptGroupMember
+@userID int,
+@newUserID int,
+@groupID int
+as
+begin
+	
+	/*must be mod or admin*/
+	if( ((select top(1) adminUserID from GroupInfo where groupID = @groupID) = @userID) or  
+		(exists (select userID from GroupModerators where userID = @userID and groupID = @groupID))
+	)
+	begin
+
+		/* user not in group already*/
+		if(not exists (select top(1) userID from GroupUsers where groupID = @groupID and userID = @newUserID))
+		begin
+			insert into GroupUsers(userID, groupID)
+			values(@newUserID, @groupID)
+
+			/* also remove user from join requests table*/
+
+			delete from JoinRequests
+			where userID = @newUserID and groupID = @groupID
+
+			select 'success'
+		end
+	end
+
+end
+
+
+/* admin or mod - decline member - private groups*/
+go
+create procedure spDeclineGroupMember
+@userID int,
+@newUserID int,
+@groupID int
+as
+begin
+	/*must be mod or admin*/
+	if( ((select top(1) adminUserID from GroupInfo where groupID = @groupID) = @userID) or  
+		(exists (select userID from GroupModerators where userID = @userID and groupID = @groupID))
+	)
+	begin
+		delete from JoinRequests
+		where userID = @newUserID and groupID = @groupID
+		select 'success'
+	end
+	else
+	begin
+		select 'failed'
+	end
+end
+
+
+
+/* join a group - request to join if group is private 
+	add user to group
+*/
+go
+create procedure spJoinGroup
+@userID int,
+@groupID int
+as
+begin
+	
+	/*user not already in group*/
+	if(not exists (select top(1) userID from GroupUsers where groupID = @groupID and userID = @userID))
+	begin
+		/* for public group... */
+		if( (select isPrivate from GroupInfo where groupID = @groupID) = 0 )
+		begin
+			insert into GroupUsers(userID, groupID)
+			values(@userID, @groupID)
+			select 'success'
+		end
+		else /* for private group - make request to join*/
+		begin
+			if(not exists (select userID from JoinRequests where userID = @userID and groupID = @groupID) )
+			begin
+				insert into JoinRequests(userID, groupID)
+				values(@userID, @groupID)
+				select 'success'
+			end
+			else
+			begin
+				select 'failed: Join request already made'
+			end
+		end
+	end
+	else
+	begin
+		select 'failed: user already in group'
+	end
+end
+
+
+/* Admin or mod - kick member*/
+/* conditions
+		- admins can kick anyone but themself 
+		- mods can kick anyone other than admin, other mods, and themself
+*/
+go
+create procedure spRemoveGroupMember
+@userID int,
+@userToRemoveID int,
+@groupID int
+as
+begin
+	/* for admin...*/
+	if( ((select top(1) adminUserID from GroupInfo where groupID = @groupID) = @userID))
+	begin
+		
+		if(not (@userID = @userToRemoveID))
+		begin
+			delete from GroupUsers where @userToRemoveID = userID and @groupID = groupID
+			delete from GroupModerators where userID = @userToRemoveID and @groupID = groupID
+			select 'success'
+		end
+
+	end
+	/* for moderators */
+	if ( exists (select top(1) userID from GroupModerators where userID = @userID and groupID = @groupID) )
+	begin
+		if( (@userToRemoveID not in (select userID from GroupModerators where groupID = @groupID)) and not @userID = @userToRemoveID)
+		begin
+			delete from GroupUsers where @userToRemoveID = userID and @groupID = groupID
+			select 'success'
+		end
+	end
+end
+
+
+
+/* leave group */
+go
+create procedure spLeaveGroup
+@userID int,
+@groupID int
+as
+begin
+	if(exists ( select top(1) userID from GroupUsers where userID = @userID and groupID = @groupID ))
+	begin
+		delete from GroupUsers where groupID = @groupID and userID = @userID
+		delete from GroupModerators where groupID = @groupID and userID = @userID
+		select 'success'
+	end
+	else
+	begin
+		select 'failed'
+	end
+end	
+
+
+
+/* get group moderators list - include admin*/
+go
+create procedure spGetGroupMods
+@groupID int
+as
+begin
+	select userID from GroupModerators where groupID = @groupID
+	union
+	select adminUserID from GroupInfo where groupID = @groupID
+end
+
+
+
+
+/* like/unlike a post - group posts only*/
+go
+create procedure spLikeGroupPostStatus
+@groupPostID int,
+@userID int
+as
+begin
+	
+	if(exists (select userID from GroupPostLikes where groupPostID = @groupPostID))
+	begin
+		delete from GroupPostLikes where groupPostID = @groupPostID and userID = @userID
+		select 'success: unliked '
+	end
+	else
+	begin
+		insert into GroupPostLikes(groupPostID, userID)
+		values(@groupPostID, @userID)
+		select 'success: liked'
+	end
+
+end
+
+
+/* get post likes count*/
+go
+create procedure spGetGroupPostLikes
+@groupPostID int
+as
+begin
+	select count(*) from GroupPostLikes where groupPostID = @groupPostID
+end
+
+/* get group post likers (users) */
+go
+create procedure spGetGroupPostLikers
+@groupPostID int
+as
+begin
+	select userName from UserLogin where userID in (select userID from GroupPostLikes where groupPostID = @groupPostID)
+end
+
+
+/* get rsvped users list */
+go
+create procedure spGetRSVPUsers
+@groupID int,
+@groupEventID int
+as
+begin
+	select userName from UserLogin where userID in (select userID from RSVPUser where groupEventID = @groupEventID and groupID = @groupID)
+end
+
+
+/* get group event by id */
+go 
+create procedure spGetGroupEventByID
+@groupEventID int
+as
+begin
+	select userID, creationTimestamp, scheduledTimestamp, description, locationID from GroupEvent
+	where groupEventID = @groupEventID
+end
 
