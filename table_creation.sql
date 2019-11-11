@@ -144,11 +144,14 @@ FOREIGN KEY (userID) REFERENCES UserLogin(userID)
 
 
 CREATE TABLE DirectMessages(
+directMessageID int primary key identity,
 senderID int foreign key references UserLogin(userID),
 receiverID int foreign key references UserLogin(userID),
 postTime datetime,
 postContent varchar(255)
 )
+
+
 
 CREATE TABLE JoinRequests(
 userID int foreign key references UserLogin(userID),
