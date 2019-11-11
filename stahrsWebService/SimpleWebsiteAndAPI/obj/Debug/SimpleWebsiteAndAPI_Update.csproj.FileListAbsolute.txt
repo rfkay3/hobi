@@ -1,0 +1,78 @@
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\SimpleWebsiteAndAPI.dll.config
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\SimpleWebsiteAndAPI.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\SimpleWebsiteAndAPI.pdb
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\csc.exe
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\csc.exe.config
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\csc.rsp
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\csi.exe
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\csi.rsp
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.AppContext.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\vbc.exe
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\vbc.exe.config
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\vbc.rsp
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\VBCSCompiler.exe
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\Newtonsoft.Json.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\Newtonsoft.Json.pdb
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\Newtonsoft.Json.xml
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI_Update.csprojAssemblyReference.cache
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI_Update.csproj.CoreCompileInputs.cache
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI_Update.csproj.CopyComplete
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI.dll
+C:\Users\rodge\Desktop\mupy-master\webservice\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI.pdb
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI_Update.csprojAssemblyReference.cache
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI_Update.csproj.CoreCompileInputs.cache
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI.pdb
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\SimpleWebsiteAndAPI.dll.config
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\SimpleWebsiteAndAPI.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\SimpleWebsiteAndAPI.pdb
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\csc.exe
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\csc.exe.config
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\csc.rsp
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\csi.exe
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\csi.rsp
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.AppContext.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\vbc.exe
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\vbc.exe.config
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\vbc.rsp
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\VBCSCompiler.exe
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\Newtonsoft.Json.dll
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\Newtonsoft.Json.pdb
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\Newtonsoft.Json.xml
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\rodge\Desktop\Hobi Api\webservice\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI_Update.csproj.CopyComplete
