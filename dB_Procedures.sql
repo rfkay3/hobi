@@ -753,6 +753,121 @@ begin
 end
 
 
+
+/* get direct message by id */
+go
+create procedure spGetDirectMessageByID
+@directMessageID int
+as
+begin
+	select senderID, receiverID, postTime, postContent from DirectMessages where directMessageID = @directMessageID
+end
+
+
+
+/* get group message by id*/
+go
+create procedure spGetGroupPostByID
+@groupPostID int
+as
+begin
+	
+	select userID, postTime, postContent from GroupPost where groupPostID = @groupPostID
+
+end
+
+
+
+/* get user by id*/
+go
+create procedure spGetUserByID
+@userID int
+as
+begin
+	select userName from UserLogin where userID = @userID
+end
+
+
+/* get location info by id*/
+go
+create procedure spGetLocationByID
+@locationID int
+as
+begin
+	select country, state, city, latitude, longitude from Locations where locationID = @locationID
+end
+
+
+
+/* get events a user has RSVPed to */
+go
+create procedure spGetUserRSVPEvents
+@userID int
+as
+begin
+
+	select RSVP.groupEventID from RSVPUser as RSVP
+	left join GroupEvent as GE on RSVP.groupEventID = GE.groupEventID
+	where RSVP.userID = @userID
+	order by GE.creationTimestamp
+
+end
+
+
+
+/* search group messages
+
+for a given group, find messages and events containg a keyword or phrase
+*/
+go
+create procedure spSearchGroupMessages
+@groupID int,
+@phrase varchar(255)
+as
+begin
+
+
+	/*get group posts IDs with matching post content*/
+	select 'postID', groupPostID from GroupPost
+	where groupID = @groupID
+	and
+	postContent like '%' + @phrase +  '%'
+
+	union
+
+	/* get group event ids with matching description*/
+	select 'eventID', groupEventID from GroupEvent
+	where groupID = @groupID
+	and
+	description like '%' + @phrase +  '%'
+
+
+end
+
+
+
+/*search direct messages
+for a given two users,
+get messages containing a keyword or phrase
+*/
+go
+create procedure spSearchDirectMessages
+@userID1 int,
+@userID2 int,
+@phrase varchar(255)
+as
+begin
+
+	select directMessageID from DirectMessages
+	where ((senderID = @userID1 or senderID = @userID2) and (receiverID = @userID1 or receiverID = @userID2))
+	and
+	postContent like '%' + @phrase +  '%'
+
+end
+
+
+
+
 /* admin or mod only - add group member (Private group)*/
 go
 create procedure spAcceptGroupMember
@@ -811,7 +926,9 @@ end
 
 
 
-/* join a group - request to join if group is private */
+/* join a group - request to join if group is private 
+	add user to group
+*/
 go
 create procedure spJoinGroup
 @userID int,
@@ -974,4 +1091,14 @@ begin
 	select userName from UserLogin where userID in (select userID from RSVPUser where groupEventID = @groupEventID and groupID = @groupID)
 end
 
+
+/* get group event by id */
+go 
+create procedure spGetGroupEventByID
+@groupEventID int
+as
+begin
+	select userID, creationTimestamp, scheduledTimestamp, description, locationID from GroupEvent
+	where groupEventID = @groupEventID
+end
 
