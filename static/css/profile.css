@@ -1,0 +1,35 @@
+#interests {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+#username {
+    font-size: 24px;
+}
+
+#my-groups {
+    font-size: 24px;
+}
+
+#my-events {
+    font-size: 24px;
+}
+
+.interests {
+    border: 1px solid black;
+    border-radius: 15px 15px 15px 15px;
+    font-size: 16px;
+}
+
+.group-image {
+    width: 100%;
+}
+
+.group-name {
+    font-size: 24px;
+}
+
+hr {
+    height: 2px;
+    background-color: grey;
+}
