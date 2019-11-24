@@ -812,6 +812,23 @@ namespace WebAPI {
         }
 
 
+        /*
+         * Find groups - search for groups in a specified radius in miles
+         */
+        [WebMethod]
+        public void findGroups(String search, float radius, float latitude, float longitude)
+        {
+
+            addParam("@search", search);
+            addParam("@radius", radius);
+            addParam("@lat", latitude);
+            addParam("@long", longitude);
+            send("spEditGroupDescription", serializeStyle.DATA_TABLE);
+
+        }
+
+
+
 
         #endregion
     }

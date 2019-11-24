@@ -1102,3 +1102,159 @@ begin
 	where groupEventID = @groupEventID
 end
 
+
+
+/* search for groups - find groups
+   Given an interest or name of group, find all matching groups within a specific radius
+*/
+
+go
+create procedure spFindGroups
+@search varchar(255),
+@radius float,
+@lat float,
+@long float
+as
+begin
+
+	/* include groups within givin radius (given in miles)
+	and get all group ids with matching name, description, or interests
+	*/
+	select GI.groupID from GroupInfo as GI
+	where (dbo.fnGetDistanceKM
+		((select top(1) L.latitude from Locations as L where L.locationID = GI.locationID),
+		(select top(1) L.longitude from Locations as L where L.locationID = GI.locationID),
+		(@lat),
+		(@long))
+		< (dbo.fnMilesToKm(@radius)))
+		and
+		(GI.groupID in (
+			select groupID from GroupInfo where (groupName like '%' + @search +  '%') 
+							   or (groupDescription like '%' + @search +  '%')
+			union
+			select groupID from GroupInterests where (groupInterestTag like '%' + @search +  '%')
+		))
+
+end
+
+
+/* convert KM to miles */
+go
+create function fnKmToMiles(
+@KM float
+)
+returns float
+as
+begin
+	return (@KM * 0.621371)
+end	
+
+go
+create procedure spKmToMiles
+@KM float
+as
+begin
+	select (@KM * 0.621371) as [Miles]
+end
+
+/* convert miles to km */
+go
+create function fnMilesToKm(
+@Miles float
+)
+returns float
+as
+begin
+	return (@Miles * 1.609344)
+end	
+
+go
+create procedure spMilesToKm
+@miles float
+as
+begin
+	select (@miles * 1.609344) as [Km]
+end
+
+
+/*  compute distance between two lat long coords - return in km*/
+go
+create function fnGetDistanceKM(
+	@latA  float,
+	@longA float,
+	@latB  float,
+	@longB float
+)
+returns float
+as
+begin
+
+	Declare @radius float
+	set @radius = 6371.0
+
+	Declare @dLat float
+	set @dLat = radians(@latB - @latA)
+
+	Declare @dLong float
+	set @dLong = radians(@longB - @longA)
+
+	Declare @a float
+	set @a = ( sin(@dLat/2.0) * sin(@dLat/2.0) )
+			   + ( cos(radians(@latA)) * cos(radians(@latB)) )
+			   * ( sin(@dLong/2.0) * sin(@dLong/2.0) )
+
+	Declare @c float
+	set @c = 2.0 * atn2( sqrt(@a), sqrt(1-@a) )
+
+	Declare @distance float
+	set @distance = @radius * @c
+
+	return @distance
+end
+
+go
+create procedure spGetDistanceKM
+@latA  float,
+@longA float,
+@latB  float,
+@longB float
+as
+begin
+
+	Declare @radius float
+	set @radius = 6371.0
+
+	Declare @dLat float
+	set @dLat = radians(@latB - @latA)
+
+	Declare @dLong float
+	set @dLong = radians(@longB - @longA)
+
+	Declare @a float
+	set @a = ( sin(@dLat/2.0) * sin(@dLat/2.0) )
+			   + ( cos(radians(@latA)) * cos(radians(@latB)) )
+			   * ( sin(@dLong/2.0) * sin(@dLong/2.0) )
+
+	Declare @c float
+	set @c = 2.0 * atn2( sqrt(@a), sqrt(1-@a) )
+
+	Declare @distance float
+	set @distance = @radius * @c
+
+	select @distance as [KM]
+
+
+end
+
+
+declare @latA float
+set @latA = (select top(1) latitude from Locations)
+declare @longA float
+set @longA = (select top(1) longitude from Locations)
+declare @latB float
+set @latB = (select top(1) latitude from Locations)
+declare @longB float
+set @longB = (select top(1) longitude from Locations)
+
+
+exec spGetDistanceKM @latA, @longA, @latB, @longB
