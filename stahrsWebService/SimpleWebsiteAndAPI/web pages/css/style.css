@@ -1,0 +1,22 @@
+.btn {
+    background-color: #FF474A;
+    color: #ffffff;
+}
+
+
+.btn:hover {
+    background-color: #FF474A;
+}
+
+.page-header {
+    font-size: 32px;
+}
+
+.circle-image {
+    border-radius: 100%;
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly]) {
+    border-bottom: 1px solid #FF474A;
+    box-shadow: 0 1px 0 0 #FF474A;
+}

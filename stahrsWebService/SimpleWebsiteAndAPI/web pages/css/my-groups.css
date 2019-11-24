@@ -1,0 +1,38 @@
+.group-image {
+    height: 100%;
+    width: 100%;
+}
+
+.group-name {
+
+}
+
+.group-row {
+    border-top: 3px solid #666666;
+    border-left: 3px solid #666666;
+    margin:0;
+    padding: 10px 0 10px 0;
+    width: 100%;
+}
+
+.group-row:last-child {
+    border-bottom: 3px solid #666666;
+}
+
+.group-body {
+    border: 3px solid #666666;
+}
+
+#group-names-container {
+    padding: 0;
+    margin: 0;
+}
+
+#group-names-column {
+    margin: 0;
+    padding: 0;
+}
+
+#header-row {
+    margin: 0;
+}

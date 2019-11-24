@@ -1,0 +1,48 @@
+.user-image {
+    height: 100%;
+    width: 100%;
+}
+
+.group-name {
+
+}
+
+.message-names-row {
+    border-top: 3px solid #666666;
+    border-left: 3px solid #666666;
+    margin:0;
+    padding: 10px 0 10px 0;
+    width: 100%;
+}
+
+.message-names-row:last-child {
+    border-bottom: 3px solid #666666;
+}
+
+.message-body {
+    border: 3px solid #666666;
+}
+
+#message-names-container {
+    padding: 0;
+    margin: 0;
+}
+
+#message-names-column {
+    margin: 0;
+    padding: 0;
+}
+
+#header-row {
+    margin: 0;
+}
+
+.message-info-row {
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.time {
+    padding: 0;
+    margin: 0;
+}
