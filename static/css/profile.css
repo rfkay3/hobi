@@ -9,10 +9,17 @@
 
 #my-groups {
     font-size: 24px;
+    font-weight: bold;
 }
 
 #my-events {
     font-size: 24px;
+    font-weight: bold;
+}
+
+#profile-image {
+    width: 250px;
+    height: 250px;
 }
 
 .interests {

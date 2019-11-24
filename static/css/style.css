@@ -14,6 +14,7 @@
 
 .circle-image {
     border-radius: 100%;
+    border: 1px solid #CCCCCC;
 }
 
 input[type=text]:not(.browser-default):focus:not([readonly]) {
