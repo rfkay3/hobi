@@ -3,8 +3,27 @@
     width: 100%;
 }
 
-.group-name {
+.group-row {
 
+}
+
+.post-title {
+    margin: 10px 0 10px;
+    font-size: 20px;
+}
+
+.post-author {
+    color: #999999;
+}
+.post-date {
+    color: #999999;
+}
+.post-replies {
+    color: #999999;
+}
+
+.post-row {
+    border-bottom: 1px solid #999999;
 }
 
 .group-row {

@@ -14,6 +14,92 @@
 
 <body>
 
+    <ul id="nav-mobile" class="sidenav sidenav-fixed">
+      <img src="../img/logo_min.png" style="width: 100%;">
+      <li class="bold"><a href="profile.html" class="waves-effect waves-red">My Profile</a></li>
+      <li class="bold active"><a href="find-group.html" class="waves-effect waves-red">Find Groups</a></li>
+      <li class="bold"><a href="my-groups.html" class="waves-effect waves-red">My Groups</a></li>
+      <li class="bold"><a href="create-group.html" class="waves-effect waves-red">Create Group</a></li>
+      <li class="bold"><a href="messages.html" class="waves-effect waves-red">Messages</a></li>
+    </ul>
+
+    
+
+  <div class="container body-container">
+
+    <!-- header -->
+
+    <div class="row justify-content-center">
+      <div class="col-6 text-center">
+        <h1 class="page-header">My Profile</h1>
+      </div>  
+    </div>
+
+    <!-- Profile Picture -->
+    <!-- group info form-->
+    <form action="#">
+      <div class="row justify-content-center">
+        <div class="col-3">
+          <input type="text" name="group-name" placeholder="Search Groups...">
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-3">
+          <input type="text" name="interests" placeholder="Within Range...">
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-3">
+          <input type="text" name="location" placeholder="Of this Location...">
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col text-center">
+          <button type="submit" class="waves-effect waves-light btn">Search</button>
+        </div>
+      </div>  
+    </form>
+    
+    <br><br><br><br>
+
+    <!-- My Events -->
+
+    <div class="row justify-content-center">
+      <div class="col-6 text-center">
+        <p id="group-results">All Results</p>
+      </div>
+    </div> 
+
+    <div class="row justify-content-center align-items-center"> 
+      <div class="col-1 text-center">
+        <img class="group-image circle-image" src="https://www.cia.gov/library/publications/the-world-factbook/attachments/maps/ZH-map.gif" alt="">
+      </div>
+      <div class="col-4 text-center">
+        <p class="group-name">Bike Across the Atlantic Ocean</p>
+      </div>
+      <div class="col-1 text-center">
+        <p class="group-distance">26.2 miles away</p>
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-center"> 
+      <div class="col-1 text-center">
+        <img class="group-image circle-image" src="https://www.biography.com/.image/t_share/MTE1ODA0OTcxNjI3MzQ5NTE3/bobby-fischer-9295608-1-402.jpg" alt="">
+      </div>
+      <div class="col-4 text-center">
+        <p class="group-name">Find Bobby Fisher</p>
+      </div>
+      <div class="col-1 text-center">
+        <p class="group-distance">26.2 miles away</p>
+      </div>
+    </div>
+
+
+    <br><br><br><br>
+      
+  </div>
+    
+
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
