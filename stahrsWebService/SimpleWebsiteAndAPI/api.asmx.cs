@@ -583,7 +583,7 @@ namespace WebAPI {
         * Add new group
         */
         [WebMethod]
-        public void addNewGroup(String groupName, int userID, String description, String country, String state, String city, String latitude, String longitude, Boolean isPrivate )
+        public void addNewGroup(String groupName, int userID, String description, String country, String state, String city, String latitude, String longitude, int isPrivate )
         {
             addParam("@groupName", groupName);
             addParam("@userID", userID);
@@ -593,8 +593,8 @@ namespace WebAPI {
             addParam("@groupCity", city);
             addParam("@latitude", latitude);
             addParam("@longitude", longitude);
-            addParam("@isPivate", isPrivate);
-            send("spAddGroupInterest", serializeStyle.SINGLE_TABLE_ROW);
+            addParam("@isPrivate", isPrivate);
+            send("spAddGroup", serializeStyle.SINGLE_TABLE_ROW);
 
         }
 
@@ -670,7 +670,7 @@ namespace WebAPI {
 
             addParam("@groupID", groupID);
             addParam("@messageCount", messageCount);
-            send("spGetGroupMessages", serializeStyle.SINGLE_TABLE_ROW);
+            send("spGetGroupMessages", serializeStyle.DATA_TABLE);
 
         }
 
@@ -781,7 +781,7 @@ namespace WebAPI {
          * Admin only - edit group location
          */
         [WebMethod]
-        public void updateGroupIcon(int userID, int groupID, String country, String state, String city, float latitude, float longitude)
+        public void updateGroupLocation(int userID, int groupID, String country, String state, String city, float latitude, float longitude)
         {
 
             addParam("@userID", userID);
@@ -823,7 +823,7 @@ namespace WebAPI {
             addParam("@radius", radius);
             addParam("@lat", latitude);
             addParam("@long", longitude);
-            send("spEditGroupDescription", serializeStyle.DATA_TABLE);
+            send("spFindGroups", serializeStyle.DATA_TABLE);
 
         }
 

@@ -313,7 +313,7 @@ go
 	@groupCity varchar(255),
 	@latitude float,
 	@longitude float,
-	@isPrivate bit
+	@isPrivate int
 	as
 	begin
 		insert into Locations (country, state, city, latitude, longitude)

@@ -64,6 +64,7 @@ isPrivate bit,
 PRIMARY KEY (groupID),
 );
 
+
 CREATE TABLE GroupModerators(
 	gmID int primary key Identity,
 	userID int foreign key references UserLogin(userID),
